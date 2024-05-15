@@ -33,8 +33,5 @@
             "Element\\Unique\\Tests\\": "tests/"
         }
     },
-    "scripts": {},
-    "require": {
-        "ramsey/uuid": "^4.2"
-    }
+    "scripts": {}
 }
