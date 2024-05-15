@@ -1,6 +1,6 @@
 <?php
 
-namespace Element\Unique\Generators\Software;
+namespace Element\Unique\Helpers\Software;
 
 class LicenseKey {
 

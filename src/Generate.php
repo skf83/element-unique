@@ -2,7 +2,7 @@
 
 namespace Element\Unique;
 
-use Element\Unique\Generators\Software\LicenseKey;
+use Element\Unique\Helpers\Software\LicenseKey;
 
 class Generate {
 
