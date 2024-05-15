@@ -3,6 +3,7 @@
 namespace Element\Unique;
 
 use Element\Unique\Helpers\Software\LicenseKey;
+use Ramsey\Uuid\Uuid;
 
 class Generate {
 
@@ -21,7 +22,7 @@ class Generate {
      *
      * @param LicenseKey $softwareLicense
      */
-    public function __construct(LicenseKey $softwareLicense) {
+    private function __construct(LicenseKey $softwareLicense) {
 
         $this->softwareLicense = $softwareLicense;
     }
@@ -101,6 +102,11 @@ class Generate {
         $result     = uniqid($prefix, $entropy);
 
         return $result;
+    }
+
+    public function uuid4() {
+
+        return Uuid::uuid4()->toString();
     }
 
 }

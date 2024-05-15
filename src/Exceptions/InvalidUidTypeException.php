@@ -1,6 +1,6 @@
 <?php
 
-namespace Element\Promethium\Exceptions;
+namespace Element\Unique\Exceptions;
 
 class InvalidUidTypeException extends \Exception {
 
