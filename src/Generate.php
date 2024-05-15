@@ -22,13 +22,13 @@ class Generate {
     /**
      * @return array
      */
-    public static function twoFactorRecoveryCodes(LicenseKey $licenseKey): array {
+    public static function twoFactorRecoveryCodes(): array {
 
         $tokens = [];
 
         for ($key = 0 ; $key < 10; $key++) {
 
-            $tokens[] = strtolower(self::softwareLicenseKey($licenseKey, 16, 55, '', ''));
+            $tokens[] = strtolower(self::softwareLicenseKey(16, 55, '', ''));
         }
 
         return $tokens;
@@ -43,7 +43,6 @@ class Generate {
     }
 
     /**
-     * @param LicenseKey $licenseKey
      * @param int $length
      * @param string $format
      * @param string $name
@@ -51,7 +50,7 @@ class Generate {
      *
      * @return string
      */
-    public static function softwareLicenseKey(LicenseKey $licenseKey, int $length = 12, string $format = '4444', string $name = '', string $software = ''): string {
+    public static function softwareLicenseKey(int $length = 12, string $format = '4444', string $name = '', string $software = ''): string {
 
         /**
          * DEFAULTS:
@@ -61,6 +60,7 @@ class Generate {
          * $name        = '';                                   // Name of the person or company in which the key is generated for?
          * $software    = '';                                   // Name of the software in which the key is generated for?
          */
+        $licenseKey = new LicenseKey;
         $baseChars  = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // Setting the allowed characters to be used
         $keylength  = $length;
         $keyformat  = $format;
