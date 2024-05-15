@@ -1,8 +1,8 @@
 <?php
 
-namespace Element\Unique\Helpers;
+namespace Element\Unique\Generators\Software;
 
-class SoftwareLicense {
+class LicenseKey {
 
     /**
      * @param $length
@@ -23,7 +23,7 @@ class SoftwareLicense {
      *
      * @return string
      */
-    function initCode($length, $basechar) {
+    function initCode($length, $basechar): string {
 
         $list       = $basechar;
         $lenlist    = strlen($list) - 1; //count start from 0
@@ -77,7 +77,10 @@ class SoftwareLicense {
         $a = str_split($str);
         $sum = 0;
 
-        for ($i = 0; $i < count($a); $i++) $sum = $sum + base_convert($a[$i], 36, 10);
+        for ($i = 0; $i < count($a); $i++) {
+
+            $sum = $sum + base_convert($a[$i], 36, 10);
+        }
 
         $sum = str_replace(array("0", "1", "O", "I", "o", "i"),
             array("AZ", "BY", "29", "38", "29", "38",),
