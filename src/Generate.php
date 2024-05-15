@@ -4,6 +4,7 @@ namespace Element\Unique;
 
 use Element\Unique\Generators\Auth\OTP;
 use Element\Unique\Generators\Software\LicenseKey;
+use Exception;
 
 class Generate {
 
@@ -29,5 +30,23 @@ class Generate {
         $this->authOTP              = $otp;
     }
 
+    /**
+     * @throws Exception
+     */
+    public function generate($type) {
+
+        switch ($type) {
+
+            case 'OTP':
+                return $this->authOTP;
+
+            case 'softwareLicenseKey':
+                return $this->softwareLicenseKey;
+
+            default:
+                throw new Exception("No method has been provided");
+        }
+
+    }
 
 }
