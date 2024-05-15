@@ -22,13 +22,13 @@ class Generate {
     /**
      * @return array
      */
-    public static function twoFactorRecoveryCodes(): array {
+    public static function twoFactorRecoveryCodes(LicenseKey $licenseKey): array {
 
         $tokens = [];
 
         for ($key = 0 ; $key < 10; $key++) {
 
-            $tokens[] = strtolower(self::softwareLicenseKey(16, 55, '', ''));
+            $tokens[] = strtolower(self::softwareLicenseKey($licenseKey, 16, 55, '', ''));
         }
 
         return $tokens;
