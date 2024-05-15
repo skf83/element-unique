@@ -2,14 +2,12 @@
 
 namespace Element\Unique;
 
-use Element\Unique\Generators\Auth\OTP;
 use Element\Unique\Generators\Software\LicenseKey;
-use Exception;
 
 class Generate {
 
     /**
-     * Generate properties
+     * Generate params
      */
     protected int $length       = 12;                                   // Default length
     protected string $baseChars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // Setting the allowed characters to be used
@@ -21,32 +19,88 @@ class Generate {
     /**
      * Generate constructor.
      *
-     * @param LicenseKey $licenseKey
-     * @param OTP $otp
+     * @param LicenseKey $softwareLicense
      */
-    public function __construct(LicenseKey $licenseKey, OTP $otp) {
+    public function __construct(LicenseKey $softwareLicense) {
 
-        $this->softwareLicenseKey   = $licenseKey;
-        $this->authOTP              = $otp;
+        $this->softwareLicense = $softwareLicense;
     }
 
     /**
-     * @throws Exception
+     * @return array
      */
-    public function generate($type) {
+    public function authRecoveryTokens() {
 
-        switch ($type) {
+        $tokens = [];
 
-            case 'OTP':
-                return $this->authOTP;
+        for ($key = 0 ; $key < 10; $key++) {
 
-            case 'softwareLicenseKey':
-                return $this->softwareLicenseKey;
-
-            default:
-                throw new Exception("No method has been provided");
+            $tokens[] = strtolower($this->softwareLicense(10, 55, '', ''));
         }
 
+        return $tokens;
+    }
+
+    /**
+     * @return string
+     */
+    public function otp() {
+
+        $result = rand(100,999) . '-' . rand(100,999);
+
+        return $result;
+    }
+
+    /**
+     * @param $length
+     * @param $format
+     * @param $name
+     * @param $software
+     *
+     * @return string
+     */
+    public function softwareLicense($length, $format, $name, $software) {
+
+        $keylength  = $length ?? $this->length;
+        $keyformat  = $format ?? $this->format;
+        $name       = $name ?? $this->name;
+        $software   = $software ?? $this->software;
+
+        $initlength = $this->softwareLicense->initLen($keylength);
+        $initcode   = $this->softwareLicense->initCode($initlength, $this->baseChars);
+        $fullcode   = $this->softwareLicense->extendCode($initcode, $software, $name, $keylength);
+
+        return $this->softwareLicense->formatLicense($fullcode, $keyformat, $keylength);
+    }
+
+    /**
+     * @param $security_level
+     *
+     * @return false|string
+     */
+    public function token($security_level) {
+
+        $security   = $security_level ?? PASSWORD_DEFAULT;
+
+        $result = password_hash(uniqid(), $security);
+
+        return $result;
+    }
+
+    /**
+     * @param $prefix
+     * @param $entropy
+     *
+     * @return string
+     */
+    public function uid($prefix, $entropy) {
+
+        $prefix     = $prefix ?? $this->prefix;
+        $entropy    = $entropy ?? false;
+
+        $result     = uniqid($prefix, $entropy);
+
+        return $result;
     }
 
 }
