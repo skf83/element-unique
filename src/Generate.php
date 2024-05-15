@@ -22,7 +22,7 @@ class Generate {
      *
      * @param LicenseKey $softwareLicense
      */
-    private function __construct(LicenseKey $softwareLicense) {
+    public function __construct(LicenseKey $softwareLicense) {
 
         $this->softwareLicense = $softwareLicense;
     }
