@@ -3,7 +3,6 @@
 namespace Element\Unique;
 
 use Element\Unique\Helpers\Software\LicenseKey;
-use Ramsey\Uuid\Uuid;
 
 class Generate {
 
@@ -13,7 +12,6 @@ class Generate {
     protected int $length       = 12;                                   // Default length
     protected string $baseChars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // Setting the allowed characters to be used
     protected string $format    = '4444';                               // Characters in each segment, max 5 segments
-    protected string $prefix    = '';                                   // Specify if the uuid should have a prefix attached to it in the front?
     protected string $name      = '';                                   // Name of the person or company in which the key is generated for?
     protected string $software  = '';                                   // Name of the software in which the key is generated for?
 
@@ -30,13 +28,13 @@ class Generate {
     /**
      * @return array
      */
-    public function authRecoveryTokens() {
+    public function twoFactorRecoveryCodes(): array {
 
         $tokens = [];
 
         for ($key = 0 ; $key < 10; $key++) {
 
-            $tokens[] = strtolower($this->softwareLicense(10, 55, '', ''));
+            $tokens[] = strtolower($this->softwareLicenseKey(16, 55, '', ''));
         }
 
         return $tokens;
@@ -45,11 +43,9 @@ class Generate {
     /**
      * @return string
      */
-    public function otp() {
+    public function otp(): string {
 
-        $result = rand(100,999) . '-' . rand(100,999);
-
-        return $result;
+        return rand(100,999) . '-' . rand(100,999);
     }
 
     /**
@@ -60,7 +56,7 @@ class Generate {
      *
      * @return string
      */
-    public function softwareLicense($length, $format, $name, $software) {
+    public function softwareLicenseKey($length, $format, $name, $software): string {
 
         $keylength  = $length ?? $this->length;
         $keyformat  = $format ?? $this->format;
@@ -75,36 +71,30 @@ class Generate {
     }
 
     /**
-     * @param $security_level
-     *
-     * @return false|string
-     */
-    public function token($security_level) {
-
-        $security   = $security_level ?? PASSWORD_DEFAULT;
-
-        $result = password_hash(uniqid(), $security);
-
-        return $result;
-    }
-
-    /**
-     * @param $prefix
-     * @param $entropy
+     * @param string $security
      *
      * @return string
      */
-    public function uid($prefix, $entropy) {
+    public function token(string $security = PASSWORD_DEFAULT): string {
 
-        $prefix     = $prefix ?? $this->prefix;
-        $entropy    = $entropy ?? false;
-
-        $result     = uniqid($prefix, $entropy);
-
-        return $result;
+        return password_hash(uniqid(), $security);
     }
 
-    public function uuid4() {
+    /**
+     * @param string $prefix
+     * @param bool $entropy
+     *
+     * @return string
+     */
+    public function uniqid(string $prefix = '', bool $entropy = false): string {
+
+        return uniqid($prefix, $entropy);
+    }
+
+    /**
+     * @return string
+     */
+    public function uuid4(): string {
 
         return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             // 32 bits for "time_low"
