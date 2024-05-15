@@ -28,7 +28,7 @@ class Generate {
 
         for ($key = 0 ; $key < 10; $key++) {
 
-            $tokens[] = strtolower(self::softwareLicenseKey(16, 55, '', ''));
+            $tokens[] = strtolower(self::softwareLicenseKey(10, '55555'));
         }
 
         return $tokens;
@@ -50,7 +50,7 @@ class Generate {
      *
      * @return string
      */
-    public static function softwareLicenseKey(int $length = 12, string $format = '4444', string $name = '', string $software = ''): string {
+    public static function softwareLicenseKey(int $length = 25, string $format = '55555', string $name = '', string $software = ''): string {
 
         /**
          * DEFAULTS:
