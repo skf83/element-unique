@@ -20,15 +20,24 @@ class Generate {
     }
 
     /**
-     * @return array
+     * @param int $amount
+     * @param int $length
+     * @param string $format
+     *
+     * @return array|string
      */
-    public static function twoFactorRecoveryCodes(): array {
+    public static function twoFactorRecoveryCodes(int $amount = 10, int $length = 10, string $format = '55555') {
 
         $tokens = [];
 
-        for ($key = 0 ; $key < 10; $key++) {
+        foreach (range(1, $amount) as $token) {
 
-            $tokens[] = strtolower(self::softwareLicenseKey(10, '55555'));
+            $tokens[] = strtolower(self::softwareLicenseKey($length, $format));
+        }
+
+        if (count($tokens) === 1) {
+
+            return $tokens['0'];
         }
 
         return $tokens;
