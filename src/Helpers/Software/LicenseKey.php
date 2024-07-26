@@ -123,10 +123,10 @@ class LicenseKey {
         $farray = str_split($format);
         $sarray = str_split($serial);
         $s0 = $farray[0];
-        $s1 = $farray[1] + $s0;
-        $s2 = $farray[2] + $s1;
-        $s3 = $farray[3] + $s2;
-        $s4 = $farray[4] + $s3;
+        $s1 = $farray[1] . $s0;
+        $s2 = $farray[2] . $s1;
+        $s3 = $farray[3] . $s2;
+        $s4 = $farray[4] . $s3;
         $scount = $length;
         $sformated = "";
         for ($i = 0; $i < $scount; $i++) {
